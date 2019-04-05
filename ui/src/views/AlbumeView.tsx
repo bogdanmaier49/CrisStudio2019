@@ -120,7 +120,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                 <div className='m-row m-flex-align-center width100 m-flex-center-vertical margin-top-45'>
                     <div className='m-small-content'>
 
-                        <Subtitle title='Materiale de coperta disponibile' />
+                        <Subtitle title='Materiale de coperta' />
 
                         <ScrollContainer>
                             {this.state.materialeCoperta !== undefined ? 
@@ -153,7 +153,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
 
                     <div className='m-small-content'>
 
-                        <Subtitle title='Tipuri de coperta disponibile' />
+                        <Subtitle title='Tipuri de coperta' />
                         
                         <ScrollContainer>
                             {this.state.tipuriCoperta !== undefined ? 
@@ -170,7 +170,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                                                 onClick={() => {
                                                     // Image to show on click
                                                     this.setState({
-                                                        imgSrc: BASE_LINK_TIP_COPERTA + '/Icons/' + tip.imagine,
+                                                        imgSrc: BASE_LINK_TIP_COPERTA + '/Full/' + tip.imagine,
                                                         showImage: true,
                                                         imgTitle: tip.nume
                                                     });
@@ -186,7 +186,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
 
                     <div className='m-small-content'>
 
-                        <Subtitle title='Dimensiuni albume disponibile' />
+                        <Subtitle title='Dimensiuni albume' />
 
 
                         <div className='description'> Toate dimensiunie sunt exprimate in cm si reprezinta dimensiunea unui album inchis.</div>
