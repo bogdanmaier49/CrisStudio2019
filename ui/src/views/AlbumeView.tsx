@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
 import ScrollContainer from 'src/components/ScrollContainer';
-import { GET_materialeCoperta, MaterialCoperta, TipCoperta, GET_tipCoperta, BASE_LINK_MATERIALE_COPERTA, BASE_LINK_TIP_COPERTA, DimensiuniCoperta, GET_dimensiuniCoperta, User, getUserFromToken } from 'src/service/client';
+import { GET_materialeCoperta, MaterialCoperta, TipCoperta, GET_tipCoperta, BASE_LINK_MATERIALE_COPERTA, BASE_LINK_TIP_COPERTA, DimensiuniCoperta, GET_dimensiuniCoperta, User, getUserFromToken, GET_AlbumeGaleryPhotos, Image, BASE_LINK_IMAGES, DIRECTORY_GALERY_ALBUME } from 'src/service/client';
 import Card from 'src/components/Card';
 import ContentView from './ContentView';
 import Overlay from 'src/components/Overlay';
@@ -17,7 +17,8 @@ interface IAlbumeViewState {
     showImage: boolean;
     imgSrc?: string;
     imgTitle?: string;
-    loading: boolean; 
+    loading: boolean;
+    galeryPhotos?: Image[];
 }
 
 class AlbumeView extends React.Component <any, IAlbumeViewState> {
@@ -58,6 +59,21 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                 }
             }
         });
+
+        await GET_AlbumeGaleryPhotos().then((res: any) => {
+            if (res) {
+                let images: Image[] = res.data.body.map((fileName: string) => {
+                    let image: Image = {
+                        fileName: fileName,
+                        path: BASE_LINK_IMAGES + '/' + DIRECTORY_GALERY_ALBUME
+                    }
+
+                    return image;
+                });
+
+                this.setState({galeryPhotos: images});
+            }
+        })
     }
 
     componentWillMount () {
@@ -194,18 +210,13 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                     <div className='m-small-content'>
                         <Subtitle title='Galerie Albume' />
 
-                        <PhotoGalery images={[
-                            '/images/home/image_3.jpg',
-                            '/images/home/image_1.jpg',
-                            '/images/home/image_5.jpg',
-                            '/images/home/image_4.jpg',
-                            '/images/home/image_5.jpg',
-                            '/images/home/image_3.jpg',
-                            '/images/home/image_1.jpg',
-                            '/images/home/image_2.jpg',
-                            '/images/home/image_4.jpg',
-                            '/images/home/image_2.jpg'
-                        ]} />
+                        <PhotoGalery images={this.state.galeryPhotos ? this.state.galeryPhotos : []} onImageClick={(image: Image) => {
+                            this.setState({
+                                imgSrc: image.path + '/Full/' + image.fileName,
+                                showImage: true,
+                                imgTitle: 'Productie Albume'
+                            });
+                        }}/>
                     </div>
                 </div>
             </ContentView>

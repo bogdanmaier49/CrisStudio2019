@@ -1,13 +1,16 @@
-import * as React from 'react'
+import * as React from 'react';
+import { Image } from 'src/service/client';
 
 interface IPhotoGaleryProps {
-    images: string[];
+    images: Image[];
     imagesPerPage?: number;
     className?: string;
+    onImageClick: (image: Image) => void;
 }
 
 interface IPhotoGaleryState {
     currentPage: number;
+    imageToDisplay?: Image;
 }
 
 export default class PhotoGalery extends React.Component<IPhotoGaleryProps, IPhotoGaleryState> {
@@ -20,6 +23,12 @@ export default class PhotoGalery extends React.Component<IPhotoGaleryProps, IPho
         };
     }
 
+    onImageIsClicked = (image: Image) => {
+        this.setState({
+            imageToDisplay: image
+        });
+    }
+
     renderPhotos = (): JSX.Element[] => {
         let imagesPerPage: number = this.props.imagesPerPage ? this.props.imagesPerPage : 4;
 
@@ -27,10 +36,10 @@ export default class PhotoGalery extends React.Component<IPhotoGaleryProps, IPho
         const indexOfFirstImage = indexOfLastImage - imagesPerPage;
         const currentImages = this.props.images.slice(indexOfFirstImage, indexOfLastImage);
 
-        return currentImages.map((image: string, index: number) => {
+        return currentImages.map((image: Image, index: number) => {
             return (
-                <div className='image-container bottom-shadow' key={'photo-' + index}>
-                    <img src={image} />
+                <div className='image-container bottom-shadow' key={'photo-' + index} onClick={() => {this.props.onImageClick(image)}}>
+                    <img src={image.path + '/Icons/' + image.fileName} />
                 </div>
             );
         })
@@ -38,9 +47,8 @@ export default class PhotoGalery extends React.Component<IPhotoGaleryProps, IPho
 
     onNextPhotoClick = () => {
         let nextPage: number = this.state.currentPage;
-        let imagesPerPage: number = this.props.imagesPerPage ? this.props.imagesPerPage : 4;
 
-        if (nextPage < imagesPerPage - 1) {
+        if (nextPage < this.calculateTotalNumberOfPages()) {
             nextPage ++;
         }
         this.setState({
@@ -71,11 +79,12 @@ export default class PhotoGalery extends React.Component<IPhotoGaleryProps, IPho
         // </div>
     )
 
-
     render() {
 
         let className = this.props.className ? ' ' + this.props.className : '';
+
         return (
+            <>
             <div className={'photo-galery' + className}>
                 <div className='photo-galery-content'>
                     {this.renderPhotos()}
@@ -86,6 +95,7 @@ export default class PhotoGalery extends React.Component<IPhotoGaleryProps, IPho
                     <button onClick={this.onNextPhotoClick}> <i className="material-icons">keyboard_arrow_right</i> </button>
                 </div>
             </div>
+            </>
         )
     }
 }

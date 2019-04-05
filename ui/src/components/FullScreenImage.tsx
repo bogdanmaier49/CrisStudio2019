@@ -13,6 +13,7 @@ export default class FullScreenImage extends React.Component <IFullScreenProps> 
     }
 
     render () {
+        console.log('here ' + this.props.imagePath );
         return (
             <div className='full-screen-image'>
                 <h3> {this.props.title} </h3>

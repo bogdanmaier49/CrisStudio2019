@@ -6,6 +6,8 @@ export const BASE_LINK_IMAGES = DOMAIN + '/Images';
 export const BASE_LINK_MATERIALE_COPERTA = BASE_LINK_IMAGES + '/MaterialeCoperta';
 export const BASE_LINK_TIP_COPERTA = BASE_LINK_IMAGES + '/TipuriCoperta';
 
+export const DIRECTORY_GALERY_ALBUME = 'Albume';
+
 export interface Address {
     id?: number;
     country?: string;
@@ -82,6 +84,11 @@ export interface OrderAlbum {
     numarMapeStick?: number;
     copertaBuretata?: string;
     mentiuni?: string;
+}
+
+export interface Image {
+    fileName: string;
+    path: string;
 }
 
 export const GET_allUsers = (token: string) => {
@@ -225,4 +232,8 @@ export const PATCH_orderAlbum = (token: string, id: number) => {
             'Authorization': token
         }
     });
+}
+
+export const GET_AlbumeGaleryPhotos = () => {
+    return axios.get(BASE_LINK + '/images.php?folder=' + DIRECTORY_GALERY_ALBUME);
 }
