@@ -121,7 +121,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                                                 onClick={() => {
                                                     // Image to show on click
                                                     this.setState({
-                                                        imgSrc: BASE_LINK_MATERIALE_COPERTA + '/Icons/' + mat.imagine,
+                                                        imgSrc: BASE_LINK_MATERIALE_COPERTA + '/Full/' + mat.imagine,
                                                         showImage: true, 
                                                         imgTitle: mat.nume
                                                     });
