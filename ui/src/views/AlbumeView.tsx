@@ -6,6 +6,8 @@ import Card from 'src/components/Card';
 import ContentView from './ContentView';
 import Overlay from 'src/components/Overlay';
 import FullScreenImage from 'src/components/FullScreenImage';
+import PhotoGalery from 'src/components/PhotoGalery';
+import { Subtitle } from 'src/components/Subtitle';
 
 interface IAlbumeViewState {
     materialeCoperta?: MaterialCoperta[];
@@ -101,7 +103,9 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
             <ContentView title='Albume'>
                 <div className='m-row m-flex-align-center width100 m-flex-center-vertical margin-top-45'>
                     <div className='m-small-content'>
-                        <h3 className='subtitle'> Materiale de coperta disponibile</h3>
+
+                        <Subtitle title='Materiale de coperta disponibile' />
+
                         <ScrollContainer>
                             {this.state.materialeCoperta !== undefined ? 
                                 this.state.materialeCoperta.map((mat:MaterialCoperta, index: number) => {
@@ -132,7 +136,9 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                     </div>
 
                     <div className='m-small-content'>
-                        <h3 className='subtitle'> Tipuri de coperta disponibile </h3>
+
+                        <Subtitle title='Tipuri de coperta disponibile' />
+                        
                         <ScrollContainer>
                             {this.state.tipuriCoperta !== undefined ? 
                                 this.state.tipuriCoperta.map((tip:TipCoperta, index: number) => {
@@ -163,7 +169,10 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                     </div>
 
                     <div className='m-small-content'>
-                        <h3 className='subtitle'> Dimensiuni disponibile </h3>
+
+                        <Subtitle title='Dimensiuni albume disponibile' />
+
+
                         <div className='description'> Toate dimensiunie sunt exprimate in cm si reprezinta dimensiunea unui album inchis.</div>
                         <ScrollContainer>
                             {this.state.dimensiuni !== undefined ? 
@@ -180,6 +189,23 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                                 })   
                             : <> </>}
                         </ScrollContainer>
+                    </div>
+                                
+                    <div className='m-small-content'>
+                        <Subtitle title='Galerie Albume' />
+
+                        <PhotoGalery images={[
+                            '/images/home/image_3.jpg',
+                            '/images/home/image_1.jpg',
+                            '/images/home/image_5.jpg',
+                            '/images/home/image_4.jpg',
+                            '/images/home/image_5.jpg',
+                            '/images/home/image_3.jpg',
+                            '/images/home/image_1.jpg',
+                            '/images/home/image_2.jpg',
+                            '/images/home/image_4.jpg',
+                            '/images/home/image_2.jpg'
+                        ]} />
                     </div>
                 </div>
             </ContentView>

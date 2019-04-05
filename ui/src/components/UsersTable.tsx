@@ -78,56 +78,6 @@ export default class UsersTable extends React.Component<IUsersTableProps> {
 				showPageSizeOptions={false}
 			/>
 		);
-
-        return (
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Data Inregistrarii</th>
-                        <th>Nume</th>
-                        <th>Prenume</th>
-                        <th>Telefon</th>
-                        <th>Tara</th>
-                        <th>Judet</th>
-                        <th>Oras</th>
-                        <th>Strada</th>
-                        <th>Status</th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.props.users.map((user) => {
-                            let roleId: number = 1;
-                            if (user.role && user.role.id) {
-                                roleId = user.role.id;
-                            }
-
-                            let extraClass: string = roleId === 3 ? ' green' : '';
-
-                            return (
-                                <tr className={'tr-clickable' + extraClass}
-                                    key={'user-' + user.id} onClick={() => {this.props.onUserClick(user)}}>
-                                    <td> {user.id} </td>
-                                    <td> {user.email} </td>
-                                    <td> {user.created_date} </td>
-                                    <td> {user.last_name} </td>
-                                    <td> {user.first_name} </td>
-                                    <td> {user.phone} </td>
-                                    <td> {user.address !== undefined ? user.address.country : 'nedefinit'} </td>
-                                    <td> {user.address !== undefined ? user.address.region : 'nedefinit'} </td>
-                                    <td> {user.address !== undefined ? user.address.city : 'nedefinit'} </td>
-                                    <td> {user.address !== undefined ? user.address.street : 'nedefinit'} </td>
-                                    <td> {user.role !== undefined ? user.role.name : 'nedefinit'} </td>
-                                    <td> <button className='camera-button' onClick={()=>this.props.onUpdateRoleClick(user)}> <i className="material-icons">camera_alt</i> </button> </td>
-                                </tr>
-                            );
-                        }
-                    )}
-                </tbody>
-            </table>
-        );
     }
 
 }

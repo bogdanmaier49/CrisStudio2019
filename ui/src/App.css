@@ -34,6 +34,37 @@ div {
 	top: -20px;
 }
 
+.hr-subtitle-container {
+	margin-top: 40px;
+	margin-bottom :30px; 
+	display: flex;
+	justify-content: center;
+}
+
+.hr-subtitle-3 {
+	color: rgb(177, 177, 177);
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.hr-before {
+	height: 15px;
+	border-bottom: 1px solid lightgray;
+	width: 100%;
+}
+
+.hr-after {
+	height: 15px;
+	border-bottom: 1px solid lightgray;
+	width: 100%;
+}
+
 /**
 	============== UTILS ==============
 **/
@@ -980,4 +1011,141 @@ footer {
 
 .confirm-order-view h1 {
 	color: #57657c;
+}
+
+/* GRID */
+
+.container-grid {
+	display: grid;
+	grid-template-columns: 25% 25% 25% 25%;
+	grid-gap: 10px 10px;
+	justify-content: center;
+	max-width: 800px;
+}
+
+.Albume {
+	grid-column-start: 1;
+	grid-column-end: 3;
+}
+
+.CutiiAlbume {
+	grid-column-start: 3;
+	grid-column-end: 5;
+}
+
+.HomeCarousel {
+	grid-column-start: 1;
+	grid-column-end: 5;
+	grid-row-start: 3;
+}
+
+@media only screen and (max-width: 876px) {
+	.container-grid {
+		grid-gap: 0px;
+	}
+	.Albume {
+		grid-column-start: 1;
+		grid-column-end: 5;
+	}
+	.CutiiAlbume {
+		grid-column-start: 1;
+		grid-column-end: 5;
+	}
+	.CutiiStickuri {
+		grid-column-start: 1;
+		grid-column-end: 5;
+	}
+	.MapeStickuri {
+		grid-column-start: 1;
+		grid-column-end: 5;
+	}
+	.Printuri {
+		grid-column-start: 1;
+		grid-column-end: 5;
+	}
+	.Tablouri {
+		grid-column-start: 1;
+		grid-column-end: 5;
+	}
+
+	.HomeCarousel {
+		grid-row-start: 7;
+	}
+}
+
+
+/** PHOTO GALERY */
+
+.photo-galery {
+	width: 100%;
+	border: 1px solid lightgray;
+	background-color: rgb(243, 243, 243);
+	padding: 20px;
+}
+
+.photo-galery img {
+	width: 300px;
+	height: auto;
+	background-size: cover;
+}
+
+.photo-galery-content {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.control-burttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.control-burttons button {
+	margin: 0px;
+	margin-left: 10px;
+	margin-right: 10px;
+	border-radius: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.control-burttons button i {
+	font-size: 26pt;
+}
+
+.image-container {
+	margin: 5px;
+	padding: 10px;
+	background-color: white;
+	transition: 0.3s ease;
+}
+
+.photo-galery .image-container:hover {
+	opacity: 0.5;
+}
+
+.photo-galery .pagination-container {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.photo-galery .pagination {
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 7px;
+	border-radius: 25px;
+	display: flex;
+	justify-content: center;
+	font-size: 14pt;
+	background-color: #57657c;
+	color: white;
+
 }

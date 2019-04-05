@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ContentBox } from 'src/components/ContentBox';
 import ViewContainer from 'src/components/ViewContainer';
-import { Grid, Col, Row } from 'react-bootstrap';
 import MessageBox from 'src/components/MessageBox';
 import MCarousel from 'src/components/Carousel';
 
@@ -19,9 +18,9 @@ class HomeView extends React.Component<any, IHomeViewState> {
         };
     }
 
-    private displayTile = (title: string, image: string, md: number, onClick:()=>void) => {
+    private displayTile = (title: string, image: string, className: string, onClick:()=>void) => {
         return (
-            <Col xs={12} md={md} className='margin-top-25'>
+            <div className={className}>
                 <ContentBox 
                     title={title}
                     content=''
@@ -29,7 +28,7 @@ class HomeView extends React.Component<any, IHomeViewState> {
                     width='100%'
                     onButtonClick={onClick}
                 />
-            </Col>
+            </div>
         );
     }
 
@@ -38,37 +37,31 @@ class HomeView extends React.Component<any, IHomeViewState> {
             <>
                 <MessageBox show={this.state.showOrderSuccessDialog} title='Comanda efectuata' message='Comanda dumneavoastra a fost efectuata cu success.' onCloseClick={() => {this.setState({showOrderSuccessDialog: false})}}/>
                 <ViewContainer>
-                        <Grid className='width900px'>
+                    <div className='margin-top-45'>
+                        <div className='container-grid'>
+                            {this.displayTile('Albume', '/images/albume/DSC_2170.jpg', 'Albume', ()=>{this.props.history.push('/albume')})}
+                            {this.displayTile('Cutii Albume', '/images/home/cutiialbume.jpg', 'CutiiAlbume', ()=>{this.props.history.push('/cutiialbume')})}
 
-                            <Row>
-                                {this.displayTile('Albume', '/images/albume/DSC_2170.jpg', 6, ()=>{this.props.history.push('/albume')})}
-                                {this.displayTile('Cutii Albume', '/images/home/cutiialbume.jpg', 6, ()=>{this.props.history.push('/cutiialbume')})}
-                            </Row>
-                            <Row>
-                                {this.displayTile('Cutii stickuri', '/images/home/cutiilemn.jpg', 3, ()=>{this.props.history.push('/cutiistickuri')})}
-                                {this.displayTile('Mape stickuri', '/images/home/cutiistickuri.jpg', 3, ()=>{this.props.history.push('/mapestickuri')})}
-                                {this.displayTile('Printuri', '/images/home/login-image.jpg', 3, ()=>{this.props.history.push('/printuri')})}
-                                {this.displayTile('Tablouri', '/images/albume/tablouri.jpg', 3, ()=>{this.props.history.push('/tablouri')})}
-                            </Row>
+                            {this.displayTile('Cutii stickuri', '/images/home/cutiilemn.jpg', 'CutiiStickuri', ()=>{this.props.history.push('/cutiistickuri')})}
+                            {this.displayTile('Mape stickuri', '/images/home/cutiistickuri.jpg', 'MapeStickuri', ()=>{this.props.history.push('/mapestickuri')})}
+                            {this.displayTile('Printuri', '/images/home/login-image.jpg', 'Printuri', ()=>{this.props.history.push('/printuri')})}
+                            {this.displayTile('Tablouri', '/images/albume/tablouri.jpg', 'Tablouri', ()=>{this.props.history.push('/tablouri')})}
 
-                            <Row>
-                                <Col sm={12} md={12} className='margin-top-45'>
-                                    <MCarousel images={[
-                                        '/Albume/DSC_2170.jpg',
-                                        '/Albume/DSC_2177.jpg',
-                                        '/Albume/DSC_2184.jpg',
-                                        '/Albume/DSC_2188.jpg',
-                                        '/Albume/DSC_2196.jpg',
-                                        '/Albume/DSC_2200.jpg',
-                                        '/Albume/DSC_2204.jpg',
-                                        '/Albume/DSC_2206.jpg'
-                                        ]} 
-                                    />
-                                </Col>
-                            </Row>
-
-                        </Grid>
-
+                            <div className='HomeCarousel'>
+                                <MCarousel images={[
+                                    '/Albume/DSC_2170.jpg',
+                                    '/Albume/DSC_2177.jpg',
+                                    '/Albume/DSC_2184.jpg',
+                                    '/Albume/DSC_2188.jpg',
+                                    '/Albume/DSC_2196.jpg',
+                                    '/Albume/DSC_2200.jpg',
+                                    '/Albume/DSC_2204.jpg',
+                                    '/Albume/DSC_2206.jpg'
+                                    ]} 
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </ViewContainer>
             </>
         );
