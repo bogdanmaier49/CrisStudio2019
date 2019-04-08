@@ -5,6 +5,7 @@ import Error from 'src/components/Error';
 import { CONTINUE_BUTTON } from 'src/service/labels';
 import DropBox from 'src/components/DropBox';
 import { OrderAlbum, MaterialCoperta, TipCoperta, DimensiuniCoperta, GET_materialeCoperta, GET_tipCoperta, GET_dimensiuniCoperta, getUserFromToken, User } from 'src/service/client';
+import { LoadComponent } from 'src/components/LoadComponent';
 
 interface Validators {
     tipCoperta: boolean;
@@ -162,16 +163,17 @@ class OrderView extends React.Component <any, IOrderViewState> {
 
     render () {
         if (this.state.loading) {
-            return <h4> Loading ... </h4>
+            return <LoadComponent />
         }
 
-        if (this.state.user !== undefined && this.state.user.role !== undefined && (this.state.user.role.name === 'fotograf' || this.state.user.role.name === 'admin')) {
+        if (this.state.user !== undefined) {
+            if (this.state.user.role !== undefined && (this.state.user.role.name === 'fotograf' || this.state.user.role.name === 'admin')) {
             return (
                 <ViewContainer>
 
                         { this.state.loading === false ? 
                         <div className='order-view form-container content-container bottom-shadow'>
-                            <div className='center-container form-title'>
+                            <div className='center-container form-title noselect'>
                                 <h1> Comanda </h1>
                             </div>
 
@@ -324,11 +326,14 @@ class OrderView extends React.Component <any, IOrderViewState> {
                                 <button className='form-button' onClick={this.onSubmit}> { CONTINUE_BUTTON } </button>
                             </form> 
 
-                        </div> : <> Loading </> }
+                        </div> : <LoadComponent /> }
 
 
                 </ViewContainer>
             );
+            } else {
+                return <Redirect to='/notverified' />
+            }
         }
 
         return <Redirect to='/login' />

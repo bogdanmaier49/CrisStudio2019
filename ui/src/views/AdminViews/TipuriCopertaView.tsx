@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { GET_tipCoperta, TipCoperta } from 'src/service/client';
 import TipCopertaTable from 'src/components/TipCopertaTable';
+import { LoadComponent } from 'src/components/LoadComponent';
 
 interface ITipuriCopertaViewProps {
     token: string;
@@ -34,7 +35,7 @@ export default class TipCopertaView extends React.Component<ITipuriCopertaViewPr
     render() {
 
         if (this.state.loading) {
-            return <h4> Se incarca materialele ... </h4>
+            return <LoadComponent />
         }
 
         if (this.state.tips)

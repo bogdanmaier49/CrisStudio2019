@@ -6,7 +6,8 @@ include_once __DIR__ . '/php-jwt-master/src/JWT.php';
 use \Firebase\JWT\JWT;
 
 define("JWT_KEY", "crisstudio2018_jwttokenkey");
-define("DOMAIN_LINK", "http://localhost:8080/CrisStudio");
+// define("DOMAIN_LINK", "http://localhost:8080/CrisStudio");
+define("DOMAIN_LINK", "http://www.crisstudio.ro/");
 
 class ResponseEntity {
     public $code;

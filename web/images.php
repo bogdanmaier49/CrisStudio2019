@@ -8,7 +8,7 @@ Web::HttpMethod('GET', function () {
     if (isset($_GET['folder'])) {
         $images = array();
 
-        foreach ( new DirectoryIterator(__DIR__ . '/../Images/' . $_GET['folder'] . '/Icons' ) as $file) {
+        foreach ( new DirectoryIterator(__DIR__ . '/../images/' . $_GET['folder'] . '/Icons' ) as $file) {
             if ($file->isFile()) {
                 $ext = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
                 if ($ext == 'jpg') {

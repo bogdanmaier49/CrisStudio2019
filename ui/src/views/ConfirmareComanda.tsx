@@ -24,7 +24,7 @@ class ConfirmareComanda extends React.Component<any, IConfirmareComandaState> {
             POST_orderAlbum(token, this.state.order).then((res) => {
 
                 if (res.data.code === 201) {
-                    this.props.history.push('/', {showOrderSuccessDialog: true});
+                    this.props.history.push('/success');
                 } else {
                     this.setState({error: res.data.message});
                 }
@@ -46,7 +46,7 @@ class ConfirmareComanda extends React.Component<any, IConfirmareComandaState> {
                             <Error title='Comanda nu poate fii efectuata' message={this.state.error} onClose={()=>{this.setState({error: undefined})}}/> :
                             <> </>
                         }
-                        <OrderContainer order={this.state.order} previewOnly={true} showClientInfo={false} showDates={false}/>
+                        <OrderContainer order={this.state.order} previewOnly={false} showClientInfo={true} showDates={false}/>
                         <div className='button-container'>                   
                             <button className='center-container' onClick={() => {this.props.history.push('/order')}}>
                                 <i className="material-icons">keyboard_arrow_left</i>

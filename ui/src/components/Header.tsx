@@ -8,6 +8,7 @@ interface IHeaderProps {
     rightButtonLabel: string;
     showLogout: boolean;
     onLogoutClick: () => void;
+    onOrderCLick: () => void;
 }
 
 export default class Header extends React.Component<IHeaderProps> {
@@ -25,8 +26,8 @@ export default class Header extends React.Component<IHeaderProps> {
                         <Row className='first-row'>
                             <Col smPush={4} xs={12} sm={4} id='logo' className='logo'>
                                 <span onClick={this.props.onLogoClick}>
-                                    <div className='center-container width100'> <h1> ac </h1> </div>
-                                    <div className='center-container width100 sub'> <h3> agentia cris </h3> </div>
+                                    <div className='center-container width100 noselect'> <h1> ac </h1> </div>
+                                    <div className='center-container width100 sub noselect'> <h3> agentia cris </h3> </div>
                                 </span>
                             </Col>
                             <Col smPull={4} xs={6} sm={4} id='phone' className='info center-container'>
@@ -34,9 +35,16 @@ export default class Header extends React.Component<IHeaderProps> {
                                 <span> { NUMAR_TELEFON_HEADER } </span>
                             </Col>
                             <Col xs={6} sm={4} id='user-details' className='info center-container'>
-                                <i className="material-icons">account_circle</i>
+                                <i className="material-icons noselect">account_circle</i>
                                 <a onClick={this.props.onRightButtonClick}> {this.props.rightButtonLabel} </a>
                                 {this.props.showLogout === true ? <> / <a onClick={this.props.onLogoutClick}> LogOut </a> </>: <> </>}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <div className='header-order-button noselect'>
+                                    <button onClick={this.props.onOrderCLick}> Comanda </button>
+                                </div>
                             </Col>
                         </Row>
                     </div>

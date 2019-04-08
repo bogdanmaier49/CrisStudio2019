@@ -9,18 +9,10 @@ interface IOrderContainerProps {
     showDates: boolean;
 }
 
-interface IOrderContainerState {
-    renderMoreInfo: boolean;
-}
 
-
-export default class OrderContainer extends React.Component<IOrderContainerProps, IOrderContainerState> {
+export default class OrderContainer extends React.Component<IOrderContainerProps> {
     public constructor (props: IOrderContainerProps) {
         super(props);
-
-        this.state = {
-            renderMoreInfo: false
-        };
     }
 
     private renderString = (title: string, value?: string | number) => {
@@ -32,7 +24,7 @@ export default class OrderContainer extends React.Component<IOrderContainerProps
         );
     }
 
-    private renderMoreInfo = (value: boolean):JSX.Element => {
+    private renderMoreInfo = ():JSX.Element => {
         return (
             <>
                 <div className='m-row m-row-stretch white-background m-row-margin-top'>
@@ -79,14 +71,6 @@ export default class OrderContainer extends React.Component<IOrderContainerProps
 
     render () {
 
-        let smallClass = 'hide';
-        if (this.state.renderMoreInfo)
-            smallClass = '';
-
-        if (this.props.previewOnly) {
-            smallClass = '';
-        }
-
         return (
             <div className='order-container'>
 
@@ -124,20 +108,8 @@ export default class OrderContainer extends React.Component<IOrderContainerProps
                         </div> : <> </> }
                 </div>
 
-                <div className={smallClass}>
-                    {this.renderMoreInfo(this.state.renderMoreInfo)} 
-                </div>
-
-                {this.props.previewOnly === false ? 
-                <div className='m-row m-row-stretch white-background m-row-margin-top'>
-                    <button 
-                        className='m-flex m-flex-center-vertical m-flex-align-center'
-                        onClick={() => {this.setState({renderMoreInfo: !this.state.renderMoreInfo})}}
-                    > 
-                            Mai multe detalii 
-                            <i className="material-icons">keyboard_arrow_down</i>
-                    </button>
-                </div> : <> </> }
+                { this.props.previewOnly !== true ? 
+                    this.renderMoreInfo() : <> </> }
 
             </div>
         );

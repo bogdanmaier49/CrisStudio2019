@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withRouter, Redirect } from 'react-router';
 import ViewContainer from 'src/components/ViewContainer';
-import { User, getUserFromToken, GET_materialeCoperta, MaterialCoperta, TipCoperta, OrderAlbum, GET_allUsers, GET_tipCoperta, GET_comenziAlbume } from 'src/service/client';
+import { User, getUserFromToken, GET_materialeCoperta, MaterialCoperta, TipCoperta, OrderAlbum, GET_allUsers, GET_tipCoperta, GET_comenziAlbume, GET_Import } from 'src/service/client';
 import { Tabs, Tab } from 'react-bootstrap';
 import UsersView from './AdminViews/UsersView';
 import OrdersView from './AdminViews/OrdersView';
@@ -105,7 +105,7 @@ class AdminView extends React.Component<any, AdminViewState> {
                                         { token ? <UsersView token={token}/> : <> Eroare la afisarea clientilor </> }
                                     </div>
                                 </Tab>
-                                <Tab eventKey={5} title="Comenzi Albume">
+                                <Tab eventKey={2} title="Comenzi Albume">
                                     <div className='margin-top-25'>
                                         { token ? <OrdersView token={token}/> : <> Eroare la afisarea comenzilor </> }
                                     </div>
@@ -125,6 +125,31 @@ class AdminView extends React.Component<any, AdminViewState> {
 
                                     </div>
                                 </Tab> */}
+                                <Tab eventKey={3} title="Support">
+                                    <div className='margin-top-25'>
+                                        <button onClick={() => {
+                                            let token = localStorage.getItem('token');
+                                            if (token) {
+                                                GET_Import(token, 'mat').then((res: any) => {
+                                                    if (res) {
+                                                        console.log(res.data.body);
+                                                    }
+                                                });
+                                            }
+                                        }}> Import Materiale Din Folder Imagini </button>
+
+                                        <button onClick={() => {
+                                            let token = localStorage.getItem('token');
+                                            if (token) {
+                                                GET_Import(token, 'tip').then((res: any) => {
+                                                    if (res) {
+                                                        console.log(res.data.body);
+                                                    }
+                                                });
+                                            }
+                                        }}> Import Tipuri Coperta Din Folder Imagini </button>
+                                    </div>
+                                </Tab>
                             </Tabs>
 
                         </div>

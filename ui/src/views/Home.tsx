@@ -3,9 +3,13 @@ import { ContentBox } from 'src/components/ContentBox';
 import ViewContainer from 'src/components/ViewContainer';
 import MessageBox from 'src/components/MessageBox';
 import MCarousel from 'src/components/Carousel';
+import { Image, GET_GaleryPhotosFromFolder, DIRECTORY_CAROUSEL, BASE_LINK_IMAGES } from 'src/service/client';
+import { LoadComponent } from 'src/components/LoadComponent';
 
 interface IHomeViewState { 
     showOrderSuccessDialog: boolean;
+    carouselImages?: Image[];
+    loading: boolean;
 }
 
 class HomeView extends React.Component<any, IHomeViewState> {
@@ -14,8 +18,30 @@ class HomeView extends React.Component<any, IHomeViewState> {
         super(props);
 
         this.state = {
-            showOrderSuccessDialog:  this.props.location.state && this.props.location.state.showOrderSuccessDialog !== undefined ? this.props.location.state.showOrderSuccessDialog : false
+            showOrderSuccessDialog:  this.props.location.state && this.props.location.state.showOrderSuccessDialog !== undefined ? this.props.location.state.showOrderSuccessDialog : false,
+            loading: true
         };
+    }
+
+    async loadData () {
+        await GET_GaleryPhotosFromFolder(DIRECTORY_CAROUSEL).then((res) => {
+            if (res && res.data && res.data.body) {
+                let images: Image[] = res.data.body.map((fileName: string) => {
+                    let image: Image = {
+                        fileName: fileName,
+                        path: BASE_LINK_IMAGES + '/' + DIRECTORY_CAROUSEL
+                    }
+
+                    return image;
+                });
+
+                this.setState({carouselImages: images});
+            }
+        });
+    }
+
+    componentWillMount () {
+        this.loadData().then(()=>{this.setState({loading: false})});
     }
 
     private displayTile = (title: string, image: string, className: string, onClick:()=>void) => {
@@ -33,32 +59,33 @@ class HomeView extends React.Component<any, IHomeViewState> {
     }
 
     render () {
+
+        if (this.state.loading) {
+            return <LoadComponent />
+        }
+
+        let carouselImages: string[] = [];
+        if (this.state.carouselImages)
+            carouselImages = this.state.carouselImages.map ((image: Image) => {
+                return image.path + '/Icons/' + image.fileName;
+            });
+
         return (
             <>
                 <MessageBox show={this.state.showOrderSuccessDialog} title='Comanda efectuata' message='Comanda dumneavoastra a fost efectuata cu success.' onCloseClick={() => {this.setState({showOrderSuccessDialog: false})}}/>
                 <ViewContainer>
-                    <div className='margin-top-45'>
+                    <div className='margin-top-45 noselect'>
                         <div className='container-grid'>
-                            {this.displayTile('Albume', '/images/albume/DSC_2170.jpg', 'Albume', ()=>{this.props.history.push('/albume')})}
+                            {this.displayTile('Albume', '/images/home/albume.jpg', 'Albume', ()=>{this.props.history.push('/albume')})}
                             {this.displayTile('Cutii Albume', '/images/home/cutiialbume.jpg', 'CutiiAlbume', ()=>{this.props.history.push('/cutiialbume')})}
 
-                            {this.displayTile('Cutii stickuri', '/images/home/cutiilemn.jpg', 'CutiiStickuri', ()=>{this.props.history.push('/cutiistickuri')})}
-                            {this.displayTile('Mape stickuri', '/images/home/cutiistickuri.jpg', 'MapeStickuri', ()=>{this.props.history.push('/mapestickuri')})}
+                            {this.displayTile('Cutii stick', '/images/home/cutiilemn.jpg', 'CutiiStickuri', ()=>{this.props.history.push('/cutiistickuri')})}
+                            {this.displayTile('Mape stick', '/images/home/cutiistickuri.jpg', 'MapeStickuri', ()=>{this.props.history.push('/mapestickuri')})}
                             {this.displayTile('Printuri', '/images/home/login-image.jpg', 'Printuri', ()=>{this.props.history.push('/printuri')})}
-                            {this.displayTile('Tablouri', '/images/albume/tablouri.jpg', 'Tablouri', ()=>{this.props.history.push('/tablouri')})}
+                            {this.displayTile('Tablouri', '/images/home/tablouri.jpg', 'Tablouri', ()=>{this.props.history.push('/tablouri')})}
 
                             <div className='HomeCarousel'>
-                                <MCarousel images={[
-                                    '/Albume/DSC_2170.jpg',
-                                    '/Albume/DSC_2177.jpg',
-                                    '/Albume/DSC_2184.jpg',
-                                    '/Albume/DSC_2188.jpg',
-                                    '/Albume/DSC_2196.jpg',
-                                    '/Albume/DSC_2200.jpg',
-                                    '/Albume/DSC_2204.jpg',
-                                    '/Albume/DSC_2206.jpg'
-                                    ]} 
-                                />
+                                { this.state.loading === false ? <MCarousel images={carouselImages} /> : <> </> }
                             </div>
                         </div>
                     </div>

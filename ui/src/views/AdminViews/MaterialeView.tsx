@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { GET_materialeCoperta, MaterialCoperta } from 'src/service/client';
 import MaterialeTable from 'src/components/MaterialeTable';
+import { LoadComponent } from 'src/components/LoadComponent';
 
 interface IMaterialeViewProps {
     token: string;
@@ -34,7 +35,7 @@ export default class MaterialeView extends React.Component<IMaterialeViewProps, 
     render() {
 
         if (this.state.loading) {
-            return <h4> Se incarca materialele ... </h4>
+            return <LoadComponent />
         }
 
         if (this.state.mats)

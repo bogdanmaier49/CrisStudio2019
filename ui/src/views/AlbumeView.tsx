@@ -8,6 +8,7 @@ import Overlay from 'src/components/Overlay';
 import FullScreenImage from 'src/components/FullScreenImage';
 import PhotoGalery from 'src/components/PhotoGalery';
 import { Subtitle } from 'src/components/Subtitle';
+import { LoadComponent } from 'src/components/LoadComponent';
 
 interface IAlbumeViewState {
     materialeCoperta?: MaterialCoperta[];
@@ -109,7 +110,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
 
     render () {
         if (this.state.loading === true) {
-            return <h1> Incarcare Date ... </h1>
+            return <LoadComponent />
         }
 
         return (

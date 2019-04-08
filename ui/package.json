@@ -2,7 +2,7 @@
   "name": "ui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://localhost:8080/CrisStudioProduction/",
+  "homepage": "http://www.crisstudio.ro/",
   "dependencies": {
     "@types/react-bootstrap": "^0.32.15",
     "@types/react-form": "^2.16.1",

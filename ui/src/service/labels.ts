@@ -1,5 +1,6 @@
 
 export const NUMAR_TELEFON_HEADER = '0740 578 713';
+export const EMAIL_SUPPORT = 'office@crisstudio.ro'
 
 // LABELS
 

@@ -53,7 +53,11 @@ class ViewContainer extends React.Component<any, IViewContainerState> {
                         this.setState({user: undefined}, () => {this.props.history.push('/');});
                     }}
                     showLogout={this.state.user !== undefined ? true : false}
+                    onOrderCLick={() => {
+                        this.props.history.push('/order')
+                    }}
                 />
+                <div className='top-background-image' />
                 <div className='view'>
                     {this.props.children}
                 </div>

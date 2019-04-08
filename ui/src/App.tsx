@@ -10,6 +10,10 @@ import AdminView from './views/AdminView';
 import OrderView from './views/OrderView';
 import AlbumeView from './views/AlbumeView';
 import ConfirmareComanda from './views/ConfirmareComanda';
+import { DIRECTORY_GALERY_CUTII_ALBUME, DIRECTORY_GALERY_CUTII_TICK, DIRECTORY_GALERY_MAPE_STICK } from './service/client';
+import { Subtitle } from './components/Subtitle';
+import { EMAIL_SUPPORT } from './service/labels';
+
 
 class App extends React.Component<any, any> {
 
@@ -20,7 +24,8 @@ class App extends React.Component<any, any> {
     public render() {
         return (
 			<>
-				<Route path='/' component={HomeView} exact/>
+				<Route path='/' component={HomeView} exact />
+
 				<Route path='/login' component={LoginView} exact/>
 				<Route path='/register' component={RegisterView} exact/>
 				<Route path='/account' component={UserDetailsView} exact/>
@@ -31,7 +36,7 @@ class App extends React.Component<any, any> {
 				<Route path='/albume' component={AlbumeView} exact/>
 
 				<Route path='/cutiialbume' render={() => 
-					<ContentView title='Cutii Albume'> </ContentView>
+					<ContentView title='Cutii Albume' imagesFolder={DIRECTORY_GALERY_CUTII_ALBUME}> </ContentView>
 				} exact/>
 
 				<Route path='/tablouri' render={() => 
@@ -43,11 +48,44 @@ class App extends React.Component<any, any> {
 				} exact/>
 
 				<Route path='/cutiistickuri' render={() => 
-					<ContentView title='Cutii Stickuri'> </ContentView>
+					<ContentView title='Cutii Stick' imagesFolder={DIRECTORY_GALERY_CUTII_TICK}> </ContentView>
 				} exact/>
 
 				<Route path='/mapestickuri' render={() => 
-					<ContentView title='Mape Stickuri'> </ContentView>
+					<ContentView title='Mape Stick' imagesFolder={DIRECTORY_GALERY_MAPE_STICK}> </ContentView>
+				} exact/>
+
+
+				<Route path='/notverified' render={() => 
+					<ContentView title='Eroare' dontShowButton={true}> 
+						<Subtitle title='Cont neverificat' />
+
+						<p> Contul dumneavoastra trebuie verificat inainte de a putea plasa o comanda. </p>
+						<p> Contactati: <a> {EMAIL_SUPPORT} </a> pentru mai multe detalii. </p>
+						<p> Va multumim pentru intelegere! </p>
+
+						<div className='center-container margin-top-45'>
+							<button onClick={() => {this.props.history.push('/')}}> Inapoi la pagina principala </button>
+						</div>
+					</ContentView>
+				} exact/>
+
+				<Route path='/success' render={() => 
+					<ContentView title='Success' dontShowButton={true}> 
+
+						<div className='noselect success center-container margin-top-45 margin-bottom-45'> <i className="material-icons green"> done_outline </i> </div>
+
+						<div className='center-container noselect'>
+							<span>
+								<p> Comanda dumneavoastra a fost realizata cu success. </p>
+								<p> Va multumim ca ati ales Agenti Cris. </p>
+							</span>
+						</div>
+
+						<div className='center-container margin-top-45'>
+							<button onClick={() => {this.props.history.push('/')}}> Inapoi la pagina principala </button>
+						</div>
+					</ContentView>
 				} exact/>
 			</>
         );

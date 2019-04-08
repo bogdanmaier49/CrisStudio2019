@@ -2,6 +2,7 @@ import * as React from 'react';
 import { User, GET_allUsers, PATCH_user } from 'src/service/client';
 import UsersTable from 'src/components/UsersTable';
 import Error from 'src/components/Error';
+import { LoadComponent } from 'src/components/LoadComponent';
 
 interface IUsersViewProps {
     token: string;
@@ -57,7 +58,7 @@ export default class UsersView extends React.Component<IUsersViewProps, IUsersVi
 
     public render () {
         if (this.state.loading === true) {
-            return <h4> Userii se incarca ... </h4>
+            return <LoadComponent />
         }
 
         if (this.state.users && this.state.filteredUsers)

@@ -1,12 +1,19 @@
 import axios from 'axios';
 
-const DOMAIN = 'http://localhost:8080/CrisStudio';
+// const DOMAIN = 'http://localhost:8080/CrisStudio';
+const DOMAIN = 'http://www.crisstudio.ro';
 const BASE_LINK = DOMAIN + '/web';
-export const BASE_LINK_IMAGES = DOMAIN + '/Images';
+export const BASE_LINK_IMAGES = DOMAIN + '/images';
 export const BASE_LINK_MATERIALE_COPERTA = BASE_LINK_IMAGES + '/MaterialeCoperta';
 export const BASE_LINK_TIP_COPERTA = BASE_LINK_IMAGES + '/TipuriCoperta';
 
 export const DIRECTORY_GALERY_ALBUME = 'Albume';
+export const DIRECTORY_GALERY_CUTII_ALBUME = 'CutiiAlbume';
+export const DIRECTORY_GALERY_MAPE_STICK = 'MapeStick';
+export const DIRECTORY_GALERY_CUTII_TICK = 'CutiiStick';
+export const DIRECTORY_CAROUSEL = 'Carousel';
+
+
 
 export interface Address {
     id?: number;
@@ -217,6 +224,14 @@ export const GET_comenziAlbume = (token: string) => {
     });
 }
 
+export const GET_orderAlbumForUser = (token: string, id: number) => {
+    return axios.get(BASE_LINK + '/order.php?userId='+id, {
+        headers: {
+            'Authorization': token
+        }
+    });
+}
+
 export const POST_orderAlbum = (token: string, order: OrderAlbum) => {
     return axios.post(BASE_LINK + '/order.php', order, {
         headers: {
@@ -236,4 +251,16 @@ export const PATCH_orderAlbum = (token: string, id: number) => {
 
 export const GET_AlbumeGaleryPhotos = () => {
     return axios.get(BASE_LINK + '/images.php?folder=' + DIRECTORY_GALERY_ALBUME);
+}
+
+export const GET_GaleryPhotosFromFolder = (folder: string) => {
+    return axios.get(BASE_LINK + '/images.php?folder=' + folder);
+}
+
+export const GET_Import = (token: string, importKey: string) => {
+    return axios.get(BASE_LINK + '/support.php?import='+importKey, {
+        headers: {
+            'Authorization': token
+        }
+    });
 }

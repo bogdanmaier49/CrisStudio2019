@@ -266,6 +266,33 @@ class OrderService {
         return null;
     }
 
+    public function getOrdersByUserId ($id) {
+        $stmt = $this->conn->prepare ('SELECT * FROM ORDER_ALBUM WHERE FK_USER = ' . $id);
+
+        if ($stmt->execute()) {
+            $result = array();
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $albumDB = $this->getAlbumById($row['FK_ALBUM']);
+
+                $albumMapped = OrderMapper::albumToService(
+                    $albumDB, 
+                    $this->tipCopertaService->getById($albumDB['FK_TIP_COPERTA']),
+                    $this->materialeService->getById($albumDB['FK_MATERIAL_COPERTA']),
+                    $this->dimensiuniService->getById($albumDB['FK_DIMENSIUNI_COPERTA'])
+                );
+
+                $order = OrderMapper::orderToService($row, $albumMapped, $this->userService->getById($row['FK_USER']));
+
+                $result[] = $order;
+            }
+
+            return $result;
+        }
+
+        return null;
+    }
+
     public function deleteOrder ($id) {
 
         $order = $this->getOrderById($id);

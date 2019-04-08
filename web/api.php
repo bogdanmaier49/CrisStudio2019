@@ -5,6 +5,6 @@ include_once __DIR__ . '/scripts/ImportTipuri.php';
 
 
 // ImportMateriale();
-ImportTipuri();
+// ImportTipuri();
 
 ?>

@@ -38,7 +38,15 @@ Web::HttpMethod ('GET', function ($token, $data) {
 
         $requestUser = Web::getUserFromToken($token);
 
-        if ($requestUser->role->id == 2) {
+        if (isset($_GET['userId'])) {
+            $userId = $_GET['userId'];
+
+            if ($requestUser->id == $userId) {
+                $data = $service->getOrdersByUserId($userId);
+                echo Web::response(200, $data, null);
+                return;
+            }
+        } else if ($requestUser->role->id == 2) {
             try {
 
                 if (isset($_GET['id'])) {
