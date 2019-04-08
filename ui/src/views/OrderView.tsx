@@ -30,6 +30,7 @@ interface IOrderViewState {
     loading: boolean;
 
     user?: User;
+    userLoaded: boolean;
 
     validators: Validators;
 
@@ -73,8 +74,8 @@ class OrderView extends React.Component <any, IOrderViewState> {
                 materialTablou: true,
                 dimensiuneTablou: true,
                 numarTablouri: true
-            }
-            
+            },
+            userLoaded: false
         };
     }
 
@@ -99,7 +100,7 @@ class OrderView extends React.Component <any, IOrderViewState> {
         });
     }
 
-    componentWillMount () {
+    componentDidMount () {
         let token = localStorage.getItem('token');
         if (token) {
             getUserFromToken (token, 
@@ -107,11 +108,14 @@ class OrderView extends React.Component <any, IOrderViewState> {
                     if (user) {
                         let order: OrderAlbum = this.state.order;
                         order.user = user;
-                        this.setState({user: user, order});
-                        this.loadData().then(() => {this.setState({loading: false})});
+                        this.setState({user: user, order}, () => {
+                            this.loadData().then(() => {this.setState({loading: false})});
+                        });
                     } else {
                         localStorage.removeItem('token');
                     }
+
+                    this.setState({userLoaded: true});
                 },
                 (err) => {
                     localStorage.removeItem('token');
@@ -162,12 +166,21 @@ class OrderView extends React.Component <any, IOrderViewState> {
     }
 
     render () {
+
+        let token = localStorage.getItem('token');
+        if (! token) {
+            return <Redirect to='/login' />
+        }
+
+        if (this.state.userLoaded && this.state.user === undefined) {
+            return <Redirect to='/login' />
+        }
+
         if (this.state.loading) {
             return <LoadComponent />
         }
 
-        if (this.state.user !== undefined) {
-            if (this.state.user.role !== undefined && (this.state.user.role.name === 'fotograf' || this.state.user.role.name === 'admin')) {
+        if (this.state.user && this.state.user.role !== undefined && (this.state.user.role.name === 'fotograf' || this.state.user.role.name === 'admin')) {
             return (
                 <ViewContainer>
 
@@ -334,9 +347,7 @@ class OrderView extends React.Component <any, IOrderViewState> {
             } else {
                 return <Redirect to='/notverified' />
             }
-        }
 
-        return <Redirect to='/login' />
     }
 
     private onMaterialeCopertaChange = (obj: any) => {
