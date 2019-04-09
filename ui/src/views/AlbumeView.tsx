@@ -108,6 +108,78 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
         );
     }
 
+    private renderMateriale = (materiale: MaterialCoperta[]): JSX.Element[] => {
+        return materiale
+        .sort((mat1: MaterialCoperta, mat2: MaterialCoperta) => {
+            let mat1Name: string = mat1.nume ? mat1.nume : '';
+            let mat2Name: string = mat2.nume ? mat2.nume : '';
+
+            if (mat1Name < mat2Name) return -1;
+            if (mat1Name > mat2Name) return 1;
+
+            return 0;
+        })
+        .map((mat:MaterialCoperta, index: number) => {
+            if (mat.imagine)
+                return (
+                    <Card 
+                        key={mat.nume + '_' + index}
+                        imagePath={BASE_LINK_MATERIALE_COPERTA + '/Icons/' + mat.imagine}
+                        title={mat.nume}
+                        description={mat.descriere}
+                        width='100px'
+                        height='150px'
+                        onClick={() => {
+                            // Image to show on click
+                            this.setState({
+                                imgSrc: BASE_LINK_MATERIALE_COPERTA + '/Full/' + mat.imagine,
+                                showImage: true, 
+                                imgTitle: mat.nume
+                            });
+                        }}
+                    />
+                );
+            
+            return <> </>
+        }) 
+    }
+
+    private renderTipuri = (tipuriCoperta: TipCoperta[]): JSX.Element[] => {
+        return tipuriCoperta
+        .sort((tip1: TipCoperta, tip2: TipCoperta) => {
+            let tip1Nume: string = tip1.nume ? tip1.nume : '';
+            let tip2Nume: string = tip2.nume ? tip2.nume : '';
+
+            if (tip1Nume < tip2Nume) return -1;
+            if (tip1Nume > tip2Nume) return 1;
+
+            return 0;
+        })
+        .map((tip:TipCoperta, index: number) => {
+            if (tip.imagine)
+                return (
+                    <Card 
+                        key={tip.nume + '_' + index}
+                        imagePath={BASE_LINK_TIP_COPERTA + '/Icons/' + tip.imagine}
+                        title={tip.nume}
+                        description={tip.descriere}
+                        width='100px'
+                        height='150px'
+                        onClick={() => {
+                            // Image to show on click
+                            this.setState({
+                                imgSrc: BASE_LINK_TIP_COPERTA + '/Full/' + tip.imagine,
+                                showImage: true,
+                                imgTitle: tip.nume
+                            });
+                        }}
+                    />
+                );
+            
+            return <> </>
+        })   
+    }
+
     render () {
         if (this.state.loading === true) {
             return <LoadComponent />
@@ -125,29 +197,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
 
                         <ScrollContainer>
                             {this.state.materialeCoperta !== undefined ? 
-                                this.state.materialeCoperta.map((mat:MaterialCoperta, index: number) => {
-                                    if (mat.imagine)
-                                        return (
-                                            <Card 
-                                                key={mat.nume + '_' + index}
-                                                imagePath={BASE_LINK_MATERIALE_COPERTA + '/Icons/' + mat.imagine}
-                                                title={mat.nume}
-                                                description={mat.descriere}
-                                                width='100px'
-                                                height='150px'
-                                                onClick={() => {
-                                                    // Image to show on click
-                                                    this.setState({
-                                                        imgSrc: BASE_LINK_MATERIALE_COPERTA + '/Full/' + mat.imagine,
-                                                        showImage: true, 
-                                                        imgTitle: mat.nume
-                                                    });
-                                                }}
-                                            />
-                                        );
-                                    
-                                    return <> </>
-                                })   
+                                this.renderMateriale(this.state.materialeCoperta)  
                             : <> </>}
                         </ScrollContainer>
                     </div>
@@ -158,29 +208,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                         
                         <ScrollContainer>
                             {this.state.tipuriCoperta !== undefined ? 
-                                this.state.tipuriCoperta.map((tip:TipCoperta, index: number) => {
-                                    if (tip.imagine)
-                                        return (
-                                            <Card 
-                                                key={tip.nume + '_' + index}
-                                                imagePath={BASE_LINK_TIP_COPERTA + '/Icons/' + tip.imagine}
-                                                title={tip.nume}
-                                                description={tip.descriere}
-                                                width='100px'
-                                                height='150px'
-                                                onClick={() => {
-                                                    // Image to show on click
-                                                    this.setState({
-                                                        imgSrc: BASE_LINK_TIP_COPERTA + '/Full/' + tip.imagine,
-                                                        showImage: true,
-                                                        imgTitle: tip.nume
-                                                    });
-                                                }}
-                                            />
-                                        );
-                                    
-                                    return <> </>
-                                })   
+                                this.renderTipuri(this.state.tipuriCoperta)
                             : <> </>}
                         </ScrollContainer>
                     </div>
