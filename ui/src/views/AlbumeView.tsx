@@ -109,7 +109,7 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
     }
 
     private renderMateriale = (materiale: MaterialCoperta[]): JSX.Element[] => {
-        return materiale
+        let result = materiale
         .sort((mat1: MaterialCoperta, mat2: MaterialCoperta) => {
             let mat1Name: string = mat1.nume ? mat1.nume : '';
             let mat2Name: string = mat2.nume ? mat2.nume : '';
@@ -141,7 +141,9 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                 );
             
             return <> </>
-        }) 
+        });
+
+        return result;
     }
 
     private renderTipuri = (tipuriCoperta: TipCoperta[]): JSX.Element[] => {
