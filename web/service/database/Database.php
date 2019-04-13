@@ -6,6 +6,12 @@ class Database {
     private $database = "r53281cris_db";
     private $username = "r53281cris_c";
     private $password = "Amparola2806!";
+
+    // private $servername = "localhost";
+    // private $database = "CRISSTUDIO";
+    // private $username = "root";
+    // private $password = "";
+
     public $conn = null;
 
     public function __construct () {
