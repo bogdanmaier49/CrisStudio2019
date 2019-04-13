@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
 import ScrollContainer from 'src/components/ScrollContainer';
-import { GET_materialeCoperta, MaterialCoperta, TipCoperta, GET_tipCoperta, BASE_LINK_MATERIALE_COPERTA, BASE_LINK_TIP_COPERTA, DimensiuniCoperta, GET_dimensiuniCoperta, User, getUserFromToken, GET_AlbumeGaleryPhotos, Image, BASE_LINK_IMAGES, DIRECTORY_GALERY_ALBUME } from 'src/service/client';
+import { GET_materialeCoperta, MaterialCoperta, TipCoperta, GET_tipCoperta, BASE_LINK_MATERIALE_COPERTA, BASE_LINK_TIP_COPERTA, DimensiuniCoperta, GET_dimensiuniCoperta, User, getUserFromToken, Image, BASE_LINK_IMAGES, GET_GaleryPhotosFromFolder, DIRECTORY_GALERY_ALBUME_NUNTA, DIRECTORY_GALERY_ALBUME_BOTEZ, DIRECTORY_GALERY_ALBUME_CLASE } from 'src/service/client';
 import Card from 'src/components/Card';
 import ContentView from './ContentView';
 import Overlay from 'src/components/Overlay';
@@ -9,6 +9,7 @@ import FullScreenImage from 'src/components/FullScreenImage';
 import PhotoGalery from 'src/components/PhotoGalery';
 import { Subtitle } from 'src/components/Subtitle';
 import { LoadComponent } from 'src/components/LoadComponent';
+import { Tabs, Tab } from 'react-bootstrap';
 
 interface IAlbumeViewState {
     materialeCoperta?: MaterialCoperta[];
@@ -19,7 +20,9 @@ interface IAlbumeViewState {
     imgSrc?: string;
     imgTitle?: string;
     loading: boolean;
-    galeryPhotos?: Image[];
+    galeryPhotosNunta?: Image[];
+    galeryPhotosClase?: Image[];
+    galeryPhotosBotez?: Image[];
 }
 
 class AlbumeView extends React.Component <any, IAlbumeViewState> {
@@ -61,18 +64,52 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
             }
         });
 
-        await GET_AlbumeGaleryPhotos().then((res: any) => {
+
+        // Albume Nunta
+        await GET_GaleryPhotosFromFolder('/' + DIRECTORY_GALERY_ALBUME_NUNTA).then((res: any) => {
             if (res) {
                 let images: Image[] = res.data.body.map((fileName: string) => {
                     let image: Image = {
                         fileName: fileName,
-                        path: BASE_LINK_IMAGES + '/' + DIRECTORY_GALERY_ALBUME
+                        path: BASE_LINK_IMAGES + '/' + DIRECTORY_GALERY_ALBUME_NUNTA
                     }
 
                     return image;
                 });
 
-                this.setState({galeryPhotos: images});
+                this.setState({galeryPhotosNunta: images});
+            }
+        })
+
+        // Albume Botez
+        await GET_GaleryPhotosFromFolder('/' + DIRECTORY_GALERY_ALBUME_BOTEZ).then((res: any) => {
+            if (res) {
+                let images: Image[] = res.data.body.map((fileName: string) => {
+                    let image: Image = {
+                        fileName: fileName,
+                        path: BASE_LINK_IMAGES + '/' + DIRECTORY_GALERY_ALBUME_BOTEZ
+                    }
+
+                    return image;
+                });
+
+                this.setState({galeryPhotosBotez: images});
+            }
+        })
+
+        // Albume Clase
+        await GET_GaleryPhotosFromFolder('/' + DIRECTORY_GALERY_ALBUME_CLASE).then((res: any) => {
+            if (res) {
+                let images: Image[] = res.data.body.map((fileName: string) => {
+                    let image: Image = {
+                        fileName: fileName,
+                        path: BASE_LINK_IMAGES + '/' + DIRECTORY_GALERY_ALBUME_CLASE
+                    }
+
+                    return image;
+                });
+
+                this.setState({galeryPhotosClase: images});
             }
         })
     }
@@ -241,13 +278,44 @@ class AlbumeView extends React.Component <any, IAlbumeViewState> {
                     <div className='m-small-content'>
                         <Subtitle title='Galerie Albume' />
 
-                        <PhotoGalery images={this.state.galeryPhotos ? this.state.galeryPhotos : []} onImageClick={(image: Image) => {
-                            this.setState({
-                                imgSrc: image.path + '/Full/' + image.fileName,
-                                showImage: true,
-                                imgTitle: 'Productie Albume'
-                            });
-                        }}/>
+                        <Tabs defaultActiveKey={1} id="albume-view-tabs" type='pills'>
+                                <Tab eventKey={1} title="Nunta">
+                                    <div className='margin-top-25'>
+                                        <PhotoGalery images={this.state.galeryPhotosNunta ? this.state.galeryPhotosNunta : []} onImageClick={(image: Image) => {
+                                            this.setState({
+                                                imgSrc: image.path + '/Full/' + image.fileName,
+                                                showImage: true,
+                                                imgTitle: 'Albume Nunta'
+                                            });
+                                        }}/>
+                                    </div>
+                                </Tab>
+
+                                <Tab eventKey={2} title="Clase">
+                                    <div className='margin-top-25'>
+                                        <PhotoGalery images={this.state.galeryPhotosClase ? this.state.galeryPhotosClase : []} onImageClick={(image: Image) => {
+                                            this.setState({
+                                                imgSrc: image.path + '/Full/' + image.fileName,
+                                                showImage: true,
+                                                imgTitle: 'Albume Clase'
+                                            });
+                                        }}/>
+                                    </div>
+                                </Tab>
+
+                                <Tab eventKey={3} title="Botez">
+                                    <div className='margin-top-25'>
+                                        <PhotoGalery images={this.state.galeryPhotosBotez ? this.state.galeryPhotosBotez : []} onImageClick={(image: Image) => {
+                                            this.setState({
+                                                imgSrc: image.path + '/Full/' + image.fileName,
+                                                showImage: true,
+                                                imgTitle: 'Albume Botez'
+                                            });
+                                        }}/>
+                                    </div>
+                                </Tab>
+                        </ Tabs>
+
                     </div>
                 </div>
             </ContentView>

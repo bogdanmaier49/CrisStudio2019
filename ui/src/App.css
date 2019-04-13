@@ -132,6 +132,10 @@ td, th {
 	margin-bottom: 5px;
 }
 
+.margin-top-25 {
+	margin-top: 25px;
+}
+
 .border {
 	border: 1px solid lightgray;
 }
@@ -199,10 +203,11 @@ td, th {
 	background-color: white;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 876px) {
 	.m-carousel {
 		margin: 0px;
 		padding: 0px;
+		margin-bottom: 45px;
 	}
 }
 
@@ -426,6 +431,10 @@ button:hover {
 
 button:focus {
 	outline: none;
+}
+
+button:focus {
+	outline: none !important;
 }
 
 .drop-box {
