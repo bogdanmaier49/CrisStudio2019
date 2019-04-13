@@ -3,7 +3,7 @@ import { ContentBox } from 'src/components/ContentBox';
 import ViewContainer from 'src/components/ViewContainer';
 import MessageBox from 'src/components/MessageBox';
 import MCarousel from 'src/components/Carousel';
-import { Image, GET_GaleryPhotosFromFolder, DIRECTORY_CAROUSEL, BASE_LINK_IMAGES } from 'src/service/client';
+import { Image, GET_GaleryPhotosFromFolder, DIRECTORY_CAROUSEL, BASE_LINK_IMAGES, FACEBOOK_LINK } from 'src/service/client';
 import { LoadComponent } from 'src/components/LoadComponent';
 
 interface IHomeViewState { 
@@ -58,6 +58,12 @@ class HomeView extends React.Component<any, IHomeViewState> {
         );
     }
 
+    private displayFacebookButton = (onClick: () => void):JSX.Element => (
+        <div className='fb-button center-container margin-top-45'>
+            <img src='/facebooklogo.svg' onClick={onClick}/>
+        </div>
+    )
+
     render () {
 
         if (this.state.loading) {
@@ -76,6 +82,10 @@ class HomeView extends React.Component<any, IHomeViewState> {
                 <ViewContainer>
                     <div className='margin-top-45 noselect'>
                         <div className='container-grid'>
+                            <div className='HomeCarousel'>
+                                { this.state.loading === false ? <MCarousel images={carouselImages} /> : <> </> }
+                            </div>
+
                             {this.displayTile('Albume', '/images/home/albume.jpg', 'Albume', ()=>{this.props.history.push('/albume')})}
                             {this.displayTile('Cutii Albume', '/images/home/cutiialbume.jpg', 'CutiiAlbume', ()=>{this.props.history.push('/cutiialbume')})}
 
@@ -83,11 +93,11 @@ class HomeView extends React.Component<any, IHomeViewState> {
                             {this.displayTile('Mape stick', '/images/home/cutiistickuri.jpg', 'MapeStickuri', ()=>{this.props.history.push('/mapestickuri')})}
                             {this.displayTile('Printuri', '/images/home/login-image.jpg', 'Printuri', ()=>{this.props.history.push('/printuri')})}
                             {this.displayTile('Tablouri', '/images/home/tablouri.jpg', 'Tablouri', ()=>{this.props.history.push('/tablouri')})}
-
-                            <div className='HomeCarousel'>
-                                { this.state.loading === false ? <MCarousel images={carouselImages} /> : <> </> }
-                            </div>
                         </div>
+
+                        {this.displayFacebookButton(() => {
+                            window.location.href = FACEBOOK_LINK;
+                        })}
                     </div>
                 </ViewContainer>
             </>
