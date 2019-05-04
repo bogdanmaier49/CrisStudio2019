@@ -114,7 +114,7 @@ export default class OrdersView extends React.Component<IOrdersViewProps, IOrder
                         <MessageBox title={'Comanda: ' + this.state.expandOrder.id} onCloseClick = {() => {this.setState({expandOrder: undefined})}} show = {this.state.expandOrder ? true : false} >
                             <OrderContainer 
                                 order={this.state.expandOrder}
-                                previewOnly = {true}
+                                previewOnly = {false}
                                 showClientInfo = {true}
                                 showDates = {true}
                             />
