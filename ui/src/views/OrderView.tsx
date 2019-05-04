@@ -140,7 +140,7 @@ class OrderView extends React.Component <any, IOrderViewState> {
     private validateOrder = (): boolean => {
 
         let v = this.state.validators;
-        return v.dimensiuneTablou && v.dimensiuniAlbum && v.linkPoze && v.materialCoperta &&
+        return v.dimensiuneTablou && v.dimensiuniAlbum && v.materialCoperta &&
             v.materialTablou && v.numarAlbume && v.numarColaje && v.numarTablouri && v.textCoperta &&
             v.tipCoperta;
 
@@ -157,7 +157,7 @@ class OrderView extends React.Component <any, IOrderViewState> {
 
             let token = localStorage.getItem('token');
             if (token) {
-                this.props.history.push({pathname: '/confirmare', state: {order: this.state.order}});
+                this.props.history.push({pathname: '/confirmare', state: {order: this.state.order, loading: false}});
             }
 
         } else {
@@ -237,7 +237,7 @@ class OrderView extends React.Component <any, IOrderViewState> {
                                     {this.renderTextField('text', 'Numar Albume', 'ex: 20', this.onNumarBucatiChange, this.state.validators.numarAlbume)}
                                 </div>
 
-                                {this.renderTextField('text', 'Link Poze', 'https://wetransfer.com/...', this.onLinkPozeChange, this.state.validators.linkPoze)}
+                                {this.renderTextField('text', 'Link Poze', 'https://wetransfer.com/...', this.onLinkPozeChange, true)}
 
                                 <div className='form-area width100'>
                                     <div className='form-field'>
@@ -398,16 +398,6 @@ class OrderView extends React.Component <any, IOrderViewState> {
             validators.numarColaje = order.album.numarPagini !== undefined && String(order.album.numarPagini).length > 0 && /^\d+$/.test(String(order.album.numarPagini));
         }
         this.setState({order:order, validators: validators});
-    }
-
-    private onLinkPozeChange = (evt: any) => {
-        let order:OrderAlbum = this.state.order !== undefined ? this.state.order : {};
-        let validators: Validators = this.state.validators;
-        if (order.album !== undefined) {
-            order.album.linkPoze = evt.target.value;
-            validators.linkPoze = order.album.linkPoze !== undefined && order.album.linkPoze.length > 0;
-        }
-        this.setState({order:order});
     }
 
     private onNumarBucatiChange = (evt: any) => {

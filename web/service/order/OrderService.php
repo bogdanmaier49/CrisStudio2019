@@ -122,8 +122,8 @@ class OrderService {
             throw new Exception('numar de pagini invalid (' . $numarPagini . ')');
         }
 
-        if (!isset($linkPoze) || ! filter_var($linkPoze, FILTER_VALIDATE_URL)) {
-            throw new Exception('link poze invalid');
+        if (!isset($linkPoze)) {
+            $linkPoze = 'nedefinit';
         }
 
         if (!isset($textCoperta) || strlen($textCoperta) == 0) {
@@ -194,6 +194,8 @@ class OrderService {
             throw new Exception('user inexistent');
         }
 
+        $linkPoze = isset($order->linkPoze) ? $order->linkPoze : 'nedefinit';
+
         try {
             $album = $order->album;
 
@@ -201,7 +203,7 @@ class OrderService {
                 $album->dimensiuniCoperta->id, 
                 $album->materialCoperta->id, 
                 $album->tipCoperta->id, 
-                $album->linkPoze, 
+                $linkPoze, 
                 $album->numarPagini, 
                 $album->textCoperta, 
                 $album->coltareMetal
