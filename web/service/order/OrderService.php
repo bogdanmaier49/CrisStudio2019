@@ -52,6 +52,34 @@ class OrderMapper {
         return $obj;
     }
 
+    public static function orderToHTML ($obj) {
+        $dataplasare = isset($obj->dataPlasare) ? $obj->dataPlasare : 'nedefinit';
+        $template = '<ul>';
+        $template .= '<li> Data Plasare: '.$dataplasare.' </li>'; 
+        $template .= '<li> Configuratie Album: '.OrderMapper::albumToHTML($obj->album).' </li>';
+        $template .= '<li> Client: '. UserMapper::toHTML($obj->user) .' </li>';
+        $template .= '<li> Mai multe detalii despre comanda: <a href="http://www.crisstudio.ro/admin"> http://www.crisstudio.ro/admin </a> </li>';
+        $template .= '</ul>';
+
+        return $template;
+    }
+
+    public static function albumToHTML ($obj) {
+
+        $linkPoze = isset($obj->linkPoze) ? $obj->linkPoze : 'nedefinit';
+
+        $template = '<ul>';
+        $template .= '<li> Tip Coperta: '.$obj->tipCoperta->nume.' </li>';
+        $template .= '<li> Material Coperta: '.$obj->materialCoperta->nume.' </li>';
+        $template .= '<li> Dimensiuni Coperta: '.$obj->dimensiuniCoperta->dimensiuni.' </li>';
+        $template .= '<li> Link Poze: '.$linkPoze.' </li>';
+        $template .= '<li> Text Coperta: '.$obj->textCoperta.' </li>';
+        $template .= '<li> Coltare Metal: '.$obj->coltareMetal.' </li>';
+        $template .= '</ul>';
+
+        return $template;
+    }
+
 }
 
 class OrderService {

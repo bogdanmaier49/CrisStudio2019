@@ -99,7 +99,7 @@ class AdminView extends React.Component<any, AdminViewState> {
                         
                         <div className='bottom-shadow margin-top-45 admin-view'>
 
-                            <Tabs defaultActiveKey={1} id="admin-view-tabs">
+                            <Tabs defaultActiveKey={2} id="admin-view-tabs">
                                 <Tab eventKey={1} title="Utilizatori">
                                     <div className='margin-top-25'>
                                         { token ? <UsersView token={token}/> : <> Eroare la afisarea clientilor </> }

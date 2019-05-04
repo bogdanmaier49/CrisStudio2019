@@ -4,10 +4,13 @@ import { OrderAlbum, POST_orderAlbum } from 'src/service/client';
 import ViewContainer from 'src/components/ViewContainer';
 import OrderContainer from 'src/components/OrderContainer';
 import Error from 'src/components/Error';
+import { LoadComponent } from 'src/components/LoadComponent';
 
 interface IConfirmareComandaState {
     order?: OrderAlbum;
     error?: string;
+
+    loading: boolean;
 }
 
 class ConfirmareComanda extends React.Component<any, IConfirmareComandaState> {
@@ -20,7 +23,9 @@ class ConfirmareComanda extends React.Component<any, IConfirmareComandaState> {
 
     private onConfirmClick = () => {
         let token: any = localStorage.getItem('token');
-        if (this.state.order && token)
+        this.setState({loading:true}, () => {
+
+            if (this.state.order && token)
             POST_orderAlbum(token, this.state.order).then((res) => {
 
                 if (res.data.code === 201) {
@@ -32,9 +37,15 @@ class ConfirmareComanda extends React.Component<any, IConfirmareComandaState> {
             }).catch((err) => {
                     this.setState({error: err});
             });
+
+        });
     }
 
     render () {
+
+        if (this.state.loading)
+            return <LoadComponent />
+
         return (
             <ViewContainer>
                 {this.state.order ? 

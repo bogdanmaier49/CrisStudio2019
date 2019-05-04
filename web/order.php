@@ -4,6 +4,7 @@ include_once __DIR__ . '/headers.php';
 include_once __DIR__ . '/service/WebUtils.php';
 include_once __DIR__ . '/service/order/OrderService.php';
 include_once __DIR__ . '/service/database/Database.php';
+include_once __DIR__ . '/service/mailer/MailService.php';
 
 
 
@@ -17,6 +18,16 @@ Web::HttpMethod ('POST', function ($token, $data) {
         if ($requestUser->role->id > 1) {
             try {
                 $service->createOrder($data);
+
+                $mailService = new MailService();
+
+                $data->dataPlasare = date("Y-m-d h:i:sa");
+
+                $mailSubject = 'Comanda Site: ' . $requestUser->first_name . ' ' . $requestUser->last_name;
+                $mailMessage = OrderMapper::orderToHTML($data);
+                
+                $mailService->sendHTMLEmail('bogdanmaier49@gmail.com', $mailSubject, $mailMessage);
+
                 echo Web::response(201, null, 'Created');
                 return;
             } catch (Exception $e) {

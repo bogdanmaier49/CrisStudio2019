@@ -73,6 +73,15 @@ class UserMapper {
         return $stmt;
     }
 
+    public static function toHTML ($user) {
+        $template = '<ul>';
+        $template .= '<li> Nume: ' .$user->first_name. ' Prenume: '.$user->last_name.' </li>';
+        $template .= '<li> Telefon: ' .$user->phone.' </li>';
+        $template .= '<li> Email: ' .$user->email.' </li>';
+        $template .= '</ul>';
+
+        return $template;
+    }
 }
 
 class UserService {
