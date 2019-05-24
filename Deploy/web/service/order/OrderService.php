@@ -94,7 +94,7 @@ class OrderService {
             throw new Exception('numar de pagini invalid (' . $numarPagini . ')');
         }
 
-        if (!isset($linkPoze) || ! filter_var($linkPoze, FILTER_VALIDATE_URL)) {
+        if (!isset($linkPoze)) {
             throw new Exception('link poze invalid');
         }
 

@@ -37,7 +37,6 @@ interface IOrderViewState {
 }
 
 class OrderView extends React.Component <any, IOrderViewState> {
-    [x: string]: any;
 
     public constructor (props: any) {
         super(props);
@@ -348,6 +347,16 @@ class OrderView extends React.Component <any, IOrderViewState> {
                 return <Redirect to='/notverified' />
             }
 
+    }
+
+    private onLinkPozeChange = (evt: any) => {
+        let order:OrderAlbum = this.state.order !== undefined ? this.state.order : {};
+        let validators: Validators = this.state.validators;
+        if (order.album !== undefined) {
+            order.album.linkPoze = evt.target.value;
+            validators.linkPoze = order.album.linkPoze !== undefined;
+        }
+        this.setState({order:order, validators: validators});
     }
 
     private onMaterialeCopertaChange = (obj: any) => {

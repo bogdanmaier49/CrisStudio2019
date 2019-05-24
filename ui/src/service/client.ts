@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const DOMAIN = 'http://localhost:8080/CrisStudio';
-// const DOMAIN = 'http://www.crisstudio.ro';
+// const DOMAIN = 'http://localhost:8080/CrisStudio';
+const DOMAIN = 'http://www.crisstudio.ro';
 const BASE_LINK = DOMAIN + '/web';
 
 export const FACEBOOK_LINK = 'https://www.facebook.com/Studio-Foto-Cris-253384214705261/?eid=ARCjJTS-jH4IqvBIg5LBCEm89LkaKgX-gyWWYWzuIQH4hgq5ZXaSTkBNeFmn3gkU0_FTUOlDDFUegoO1&fref=tag';
