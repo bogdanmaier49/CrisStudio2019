@@ -34,6 +34,8 @@ interface IOrderViewState {
 
     validators: Validators;
 
+    replici: boolean;
+
 }
 
 class OrderView extends React.Component <any, IOrderViewState> {
@@ -74,7 +76,8 @@ class OrderView extends React.Component <any, IOrderViewState> {
                 dimensiuneTablou: true,
                 numarTablouri: true
             },
-            userLoaded: false
+            userLoaded: false,
+            replici: false
         };
     }
 
@@ -229,6 +232,40 @@ class OrderView extends React.Component <any, IOrderViewState> {
                                     </div>
                                 </div>
 
+                                { this.state.order.album !== undefined && this.state.order.album.dimensiuniCoperta ?
+                                    <div className='form-area width100'>
+                                        <div className='form-field'>
+                                            <div className='form-field-label width100'> <span> Doresc Replici </span> </div>
+                                            <DropBox 
+                                                currentItem = {'NU'}
+                                                itemSet={['DA', 'NU']} 
+                                                onChange={(evt:any) => {
+                                                    if (evt === 'DA')
+                                                        this.setState({replici:true});
+                                                    else {
+                                                        this.setState({replici: false});
+                                                    }
+                                                }} 
+                                            />
+                                        </div>
+                                        {this.state.replici ? 
+                                            <>
+                                                <div className='form-field'>
+                                                    <div className='form-field-label width100'> <span> Dimensiuni Replici </span> </div>
+                                                    <DropBox 
+                                                        currentItem = {this.state.order.album !== undefined && this.state.order.dimensiuniReplica ? this.state.order.dimensiuniReplica : 'Selecteaza ...'}
+                                                        itemSet={['20x20', '40x40']} 
+                                                        onChange={this.onDimensiuneReplicachange} 
+                                                        isValid={true}
+                                                    />
+                                                </div>
+                                                {this.renderTextField('text', 'Numar Replici', 'ex: 20', this.onNumarRepliciChange, true)}
+                                            </>
+                                        : <> </> }
+                                    </div>
+                                : <> </> }
+
+
                                 {this.renderTextField('text', 'Text Coperta', 'Coperta', this.onTextCopertaChange, this.state.validators.textCoperta)}
 
                                 <div className='form-area width100'>
@@ -347,6 +384,18 @@ class OrderView extends React.Component <any, IOrderViewState> {
                 return <Redirect to='/notverified' />
             }
 
+    }
+
+    private onDimensiuneReplicachange = (evt: any) => {
+        let order:OrderAlbum = this.state.order !== undefined ? this.state.order : {};
+        order.dimensiuniReplica = evt;
+        this.setState({order:order});
+    }
+
+    private onNumarRepliciChange = (evt: any) => {
+        let order:OrderAlbum = this.state.order !== undefined ? this.state.order : {};
+        order.numarReplici = evt.target.value;
+        this.setState({order:order});
     }
 
     private onLinkPozeChange = (evt: any) => {

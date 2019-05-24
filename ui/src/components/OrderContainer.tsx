@@ -46,6 +46,13 @@ export default class OrderContainer extends React.Component<IOrderContainerProps
                 </div>
 
                 <div className='m-row m-row-stretch white-background m-row-margin-top'>
+                    <div className='order-subtitle width100'> <h3> Replici </h3> </div>
+
+                    {this.renderString('Dimensiuni Replica',  this.props.order.dimensiuniReplica)}
+                    {this.renderString('Numar Replici', this.props.order.numarReplici)}
+                </div>
+
+                <div className='m-row m-row-stretch white-background m-row-margin-top'>
                     <div className='order-subtitle width100'> <h3> Tablouri </h3> </div>
 
                     {this.renderString('Material Tablou',  this.props.order.materialTablou)}

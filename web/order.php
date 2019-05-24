@@ -26,7 +26,7 @@ Web::HttpMethod ('POST', function ($token, $data) {
                 $mailSubject = 'Comanda Site: ' . $requestUser->first_name . ' ' . $requestUser->last_name;
                 $mailMessage = OrderMapper::orderToHTML($data);
                 
-                $mailService->sendHTMLEmail('bogdanmaier49@gmail.com', $mailSubject, $mailMessage);
+                $mailService->sendHTMLEmail('dj_alex_mociran@yahoo.com', $mailSubject, $mailMessage);
 
                 echo Web::response(201, null, 'Created');
                 return;
